@@ -132,7 +132,7 @@ function Sidebar() {
         return (
           <div key={index} className="flex my-3">
             {item.icons}
-            <p className="ml-5">{item.title}</p>
+            <p className="ml-5 hidden">{item.title}</p>
           </div>
         );
       })}

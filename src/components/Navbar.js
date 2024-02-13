@@ -10,7 +10,7 @@ const Navbar = () => {
     <div className="flex fixed top-0 justify-center items-center w-[100%] z-10 bg-white">
       <div className="flex w-[96%]  py-3 justify-between ">
         <div className="flex items-center ">
-          <GiHamburgerMenu size="24px" />
+          <GiHamburgerMenu onClick={toggleHandler} size="24px" />
           <img
             className="px-4"
             width={"115px"}
