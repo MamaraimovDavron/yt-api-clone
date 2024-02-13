@@ -1,17 +1,31 @@
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
+import { Body } from "./components/Body";
 import Feed from "./components/Feed";
 import Navbar from "./components/Navbar";
-import Sidebar from "./components/Sidebar";
+import { Watch } from "./components/Watch";
 
+const appRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <Body />,
+    children: [
+      {
+        path: "/",
+        element: <Feed />,
+      },
+      {
+        path: "/watch",
+        element: <Watch />,
+      },
+    ],
+  },
+]);
 function App() {
   return (
     <div>
       <Navbar />
-      <div className="flex mt-16">
-        <Sidebar />
-        {/* Video render here... */}
-        <Feed />
-      </div>
+      <RouterProvider router={appRouter} />
     </div>
   );
 }

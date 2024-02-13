@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import img from "../images/img.jpg";
 import Avatar from "react-avatar";
 import axios from "axios";
 import API_KEY from "../constant/youtube";
