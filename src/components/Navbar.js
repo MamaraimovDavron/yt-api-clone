@@ -7,8 +7,8 @@ import img from "../images/img.jpg";
 
 const Navbar = () => {
   return (
-    <div>
-      <div className="flex px-5 justify-between ">
+    <div className="flex fixed top-0 justify-center items-center w-[100%] z-10 bg-white">
+      <div className="flex w-[96%]  py-3 justify-between ">
         <div className="flex items-center ">
           <GiHamburgerMenu size="24px" />
           <img
