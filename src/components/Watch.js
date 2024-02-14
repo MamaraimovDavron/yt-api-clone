@@ -8,11 +8,18 @@ import { AiOutlineLike } from "react-icons/ai";
 import { AiOutlineDislike } from "react-icons/ai";
 import { PiShareFatLight } from "react-icons/pi";
 import { GoDownload } from "react-icons/go";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { LuSendHorizonal } from "react-icons/lu";
+import { LiveChat } from "./LiveChat";
+import { useDispatch } from "react-redux";
+import { setMessage } from "../utils/chatSlice";
 
 export const Watch = () => {
+  const [input, setInput] = useState("");
   const [singleVideo, setSingleVideo] = useState(null);
   const [searchParams] = useSearchParams();
   const videoId = searchParams.get("v");
+  const dispatch = useDispatch();
 
   const getSingleVideo = async () => {
     try {
@@ -26,56 +33,89 @@ export const Watch = () => {
     }
   };
 
+  const sendMessage = () => {
+    dispatch(setMessage({ name: "Davron", message: input }));
+    setInput("");
+  };
+
   useEffect(() => {
     getSingleVideo();
   }, []);
 
   return (
-    <div className="ml-4">
-      <div>
-        <iframe
-          width="900"
-          height="500"
-          src={`https://www.youtube.com/embed/${videoId}?&autoplay=1`}
-          title="YouTube video player"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen
-        ></iframe>
-        <h1 className="font-bold mt-2 text-lg">
-          {singleVideo?.snippet?.title}
-        </h1>
+    <div className="flex ml-4 w-[100%] mt-2">
+      <div className="flex w-[88%]">
+        <div>
+          <iframe
+            width="900"
+            height="500"
+            src={`https://www.youtube.com/embed/${videoId}?&autoplay=1`}
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe>
+          <h1 className="font-bold mt-2 text-lg">
+            {singleVideo?.snippet?.title}
+          </h1>
 
-        <div className="flex items-center justify-between">
-          <div className="flex items-center justify-between w-[35%]">
-            <div className="flex">
-              <Avatar src={img} size={34} round={true} />
-              <h1 className="font-bold ml-2">
-                {singleVideo?.snippet.channelTitle}
-              </h1>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between w-[35%]">
+              <div className="flex">
+                <Avatar src={img} size={34} round={true} />
+                <h1 className="font-bold ml-2">
+                  {singleVideo?.snippet.channelTitle}
+                </h1>
+              </div>
+              <button className="px-4 py-1 font-medium bg-black text-white rounded-full">
+                Subscribe
+              </button>
             </div>
-            <button className="px-4 py-1 font-medium bg-black text-white rounded-full">
-              Subscribe
-            </button>
+
+            <div className="flex items-center w-[40%] justify-between mt-2">
+              <div className="flex w-33 justify-between items-center cursor-pointer bg-gray-200 px-4 py-2 rounded-full">
+                <AiOutlineLike size="20px" className="mr-5" />
+                <AiOutlineDislike size="20px" />
+              </div>
+              <div className="flex items-center cursor-pointer bg-gray-200 px-4 py-2 rounded-full">
+                <PiShareFatLight size="20px" className="mr-2" />
+                <span>Share</span>
+              </div>
+              <div className="flex items-center cursor-pointer bg-gray-200 px-4 py-2 rounded-full">
+                <GoDownload size="20px" className="mr-2" />
+                <span>Download</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="w-[100%] border border-gray-300 ml-8 rounded-lg h-fit p-4">
+          <div className="flex justify-between items-center">
+            <h1>Top Chat</h1>
+            <BsThreeDotsVertical />
+          </div>
+          <div className="overflow-y-auto h-[28rem]">
+            <LiveChat />
           </div>
 
-          <div className="flex items-center w-[40%] justify-between mt-2">
-            <div className="flex w-33 justify-between items-center cursor-pointer bg-gray-200 px-4 py-2 rounded-full">
-              <AiOutlineLike size="20px" className="mr-5" />
-              <AiOutlineDislike size="20px" />
-            </div>
-            <div className="flex items-center cursor-pointer bg-gray-200 px-4 py-2 rounded-full">
-              <PiShareFatLight size="20px" className="mr-2" />
-              <span>Share</span>
-            </div>
-            <div className="flex items-center cursor-pointer bg-gray-200 px-4 py-2 rounded-full">
-              <GoDownload size="20px" className="mr-2" />
-              <span>Download</span>
+          <div className="flex items-center justify-between border-t p-2">
+            <div className="flex items-center w-[90%]">
+              <div>
+                <Avatar src={img} size={35} round={true} />
+              </div>
+              <input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                className="border-b border-gray-300 outline-none w-full ml-2"
+                type="text"
+                placeholder="Send message ..."
+              />
+              <div className="bg-gray-200 cursor-pointer p-2 rounded-full">
+                <LuSendHorizonal size="24px" onClick={sendMessage} />
+              </div>
             </div>
           </div>
         </div>
       </div>
-
-      <div></div>
     </div>
   );
 };
